@@ -157,7 +157,9 @@ def main():
         feh_args = ' '.join(args.feh_args) if args.feh_args else ''
         cmd = ("feh --bg-fill %s %s" % (wallpapers, feh_args)).rstrip()
         print "Executing '%s'" % cmd
-        print commands.getstatusoutput(cmd)[1]
+        output = commands.getstatusoutput(cmd)[1]
+        if output:
+            print output
     else:
         print "The following are n file paths to the local wallpapers"
         for p in paths:
