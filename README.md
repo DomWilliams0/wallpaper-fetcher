@@ -18,6 +18,6 @@ Fetches random wallpapers from wallhaven.cc
 </pre>
   
 ## TODO
-X Parameter passthrough for feh
+- ~~Parameter passthrough for feh~~
 - Allow finer control over feh (--bg-fill etc.)
 - Control over category/resolution search
