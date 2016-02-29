@@ -1,6 +1,15 @@
 # wallpaper-fetcher
 Fetches random wallpapers from wallhaven.cc
 
+## Install
+Install with either
+
+`sudo sh -c "$(wget https://raw.githubusercontent.com/DomWilliams0/wallpaper-fetcher/master/install.sh -O -)"`
+
+or
+
+`sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/DomWilliams0/wallpaper-fetcher/master/install.sh)"`
+
 ## Usage
 <pre>
 usage: fetch_wallpapers.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh]
