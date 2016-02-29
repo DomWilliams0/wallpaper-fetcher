@@ -123,41 +123,46 @@ def parse_args():
     return parsed
 
 
-args = parse_args()
+def main():
+    args = parse_args()
 
-images = get_image_resources(args.url, args.out_dir, args.local)
-paths = []
-for uri in images:
-    if not uri:
-        continue
+    images = get_image_resources(args.url, args.out_dir, args.local)
+    paths = []
+    for uri in images:
+        if not uri:
+            continue
 
-    if len(paths) >= args.n:
-        break
+        if len(paths) >= args.n:
+            break
 
-    im_and_uri = fetch_image(uri)
-    if not im_and_uri:
-        sys.stderr.write("Skipping resource '%s'\n" % uri)
-        continue
+        im_and_uri = fetch_image(uri)
+        if not im_and_uri:
+            sys.stderr.write("Skipping resource '%s'\n" % uri)
+            continue
 
-    image, uri = im_and_uri
+        image, uri = im_and_uri
 
-    out_path = os.path.join(args.out_dir, os.path.basename(uri))
-    with open(out_path, 'wb') as out:
-        print "Downloaded image of size %d to %s" % (len(image), (os.path.expandvars(os.path.expanduser(os.path.abspath(args.out_dir)))))
-        out.write(image)
-    paths.append(out_path)
+        out_path = os.path.join(args.out_dir, os.path.basename(uri))
+        with open(out_path, 'wb') as out:
+            print "Downloaded image of size %d to %s" % (len(image), (os.path.expandvars(os.path.expanduser(os.path.abspath(args.out_dir)))))
+            out.write(image)
+        paths.append(out_path)
 
-if not paths:
-    print "No wallpapers found"
-    sys.exit(2)
+    if not paths:
+        print "No wallpapers found"
+        sys.exit(2)
 
-if not args.no_feh:
-    wallpapers = ' '.join(paths)
-    feh_args = ' '.join(args.feh_args) if args.feh_args else ''
-    cmd = ("feh --bg-fill %s %s" % (wallpapers, feh_args)).rstrip()
-    print "Executing '%s'" % cmd
-    print commands.getstatusoutput(cmd)[1]
-else:
-    print "The following are n file paths to the local wallpapers"
-    for p in paths:
-        print p
+    if not args.no_feh:
+        wallpapers = ' '.join(paths)
+        feh_args = ' '.join(args.feh_args) if args.feh_args else ''
+        cmd = ("feh --bg-fill %s %s" % (wallpapers, feh_args)).rstrip()
+        print "Executing '%s'" % cmd
+        print commands.getstatusoutput(cmd)[1]
+    else:
+        print "The following are n file paths to the local wallpapers"
+        for p in paths:
+            print p
+
+
+if __name__ == '__main__':
+    main()
