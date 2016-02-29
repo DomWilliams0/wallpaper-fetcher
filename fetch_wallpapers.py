@@ -14,7 +14,6 @@ def download(url):
     Downloads the given URL
     :return: The contents of the URL, or None if it failed or if the global flag 'online' is False
     """
-    global online
     if not online:
         return None
 
@@ -29,7 +28,6 @@ def download(url):
             'Connection': 'keep-alive'})).read()
     except (urllib2.HTTPError, socket.error) as e:
         sys.stderr.write("Failed to download '%s': %s\n" % (url, e))
-        online = False
         return None
 
 
@@ -50,13 +48,20 @@ def fetch_image(resource):
 
 def get_image_resources(url, local_dir, local, shuffle=True):
     """
-    :param url: The URL to download from. Ignored if local is Trye
+    :param url: The URL to download from. Ignored if local is True
     :param local_dir: The directory to save wallpapers to, and load from if offline
     :param local: True if images are to be loaded from 'local_dir'
     :param shuffle: If True, the URIs are shuffled before being returned
     :return: A list of resources, which are lists of URIs for a single resource
     """
-    html = None if local else download(url)
+    if local:
+        html = None
+    else:
+        html = download(url)
+        if html is None:
+            global online
+            online = False
+            print "Failed to access site, switching for local mode"
     uris = []
 
     if html:
@@ -111,6 +116,8 @@ def parse_args():
 
     global online
     online = not parsed.local
+    parsed.local = None
+
     parsed.out_dir = os.path.expandvars(os.path.expanduser(os.path.abspath(parsed.out_dir)))
     if parsed.timeout:
         socket.setdefaulttimeout(parsed.timeout)
