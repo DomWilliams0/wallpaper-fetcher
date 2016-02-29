@@ -14,5 +14,6 @@ Fetches random wallpapers from wallhaven.cc
   --timeout TIMEOUT  Sets the socket timeout in seconds</pre>
   
 ## TODO
+X Parameter passthrough for feh
+- Allow finer control over feh (--bg-fill etc.)
 - Control over category/resolution search
-- Parameter passthrough for feh
