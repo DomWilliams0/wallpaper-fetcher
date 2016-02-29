@@ -17,10 +17,12 @@ usage: fetch_wallpapers.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh]
                      used, instead of downloading new ones
   --timeout TIMEOUT  Sets the socket timeout in seconds
   --feh-args ...     Optional arguments to pass to feh. Anything after this
-                     will be passed to feh
+                     will be passed to feh.Note that you can override the
+                     default --bg-fill by specifying another optionin this
+                     parameter list
 </pre>
   
 ## TODO
 - ~~Parameter passthrough for feh~~
-- Allow finer control over feh (--bg-fill etc.)
+- ~~Allow finer control over feh (--bg-fill etc.)~~
 - Control over category/resolution search

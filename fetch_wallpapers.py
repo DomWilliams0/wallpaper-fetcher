@@ -103,7 +103,9 @@ def parse_args():
     parser.add_argument('--local', default=False, action='store_true',
                         help='If given, local images from the output directory are used, instead of downloading new ones')
     parser.add_argument('--timeout', help='Sets the socket timeout in seconds', type=float, required=False)
-    parser.add_argument('--feh-args', nargs=argparse.REMAINDER, help='Optional arguments to pass to feh. Anything after this will be passed to feh')
+    parser.add_argument('--feh-args', nargs=argparse.REMAINDER, help='Optional arguments to pass to feh. Anything after this will be passed to feh.'
+                                                                     'Note that you can override the default --bg-fill by specifying another option'
+                                                                     'in this parameter list')
 
     parsed = parser.parse_args()
 
