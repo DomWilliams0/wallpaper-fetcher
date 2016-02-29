@@ -152,7 +152,7 @@ if not paths:
 if not args.no_feh:
     wallpapers = ' '.join(paths)
     feh_args = ' '.join(args.feh_args) if args.feh_args else ''
-    cmd = "feh --bg-fill %s %s" % (wallpapers, feh_args)
+    cmd = ("feh --bg-fill %s %s" % (wallpapers, feh_args)).rstrip()
     print "Executing '%s'" % cmd
     print commands.getstatusoutput(cmd)[1]
 else:
