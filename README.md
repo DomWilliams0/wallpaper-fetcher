@@ -3,13 +3,16 @@ Fetches random wallpapers from wallhaven.cc
 
 ## Usage
 <pre>
- usage: fetch_wallpapers.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh] [--local] [--timeout TIMEOUT] [--feh-args ...]
+usage: fetch_wallpapers.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh]
+                           [--local] [--timeout TIMEOUT] [--feh-args ...]
 
   -h, --help         show this help message and exit
   -n N               The number of wallpapers to download and set
   -d OUT_DIR         The directory to save downloaded wallpapers to
   --url URL          The wallhaven URL to steal wallpapers from
-  --no-feh           If given, just print the wallpaper paths, otherwise call feh with --bg-fill. If feh is not installed, then this is assumed to be true
+  --no-feh           If given, just print the wallpaper paths, otherwise call
+                     feh with --bg-fill. If feh is not installed, then this is
+                     assumed to be true
   --local            If given, local images from the output directory are
                      used, instead of downloading new ones
   --timeout TIMEOUT  Sets the socket timeout in seconds
