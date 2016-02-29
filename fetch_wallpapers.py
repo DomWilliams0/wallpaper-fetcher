@@ -1,5 +1,6 @@
 #!/bin/python2
 import argparse
+import commands
 import os
 import socket
 import sys
@@ -83,13 +84,21 @@ def get_image_resources(url, local_dir, local, shuffle=True):
     return uris
 
 
+def find_feh():
+    """
+    :return: True if feh is installed, otherwise False
+    """
+    return commands.getstatusoutput('feh -v')[0] == 0
+
+
 parser = argparse.ArgumentParser(description="Download random wallpapers from wallhaven.cc")
 parser.add_argument('-n', default=1, type=int, help='The number of wallpapers to download and set')
 parser.add_argument('-d', default='/tmp/', help='The directory to save downloaded wallpapers to', dest='out_dir')
 parser.add_argument('--url',
                     default='http://alpha.wallhaven.cc/search?q=%22digital%20art%22&categories=111&purity=100&resolutions=1920x1080&sorting=random&order=desc',
                     help='The wallhaven URL to steal wallpapers from')
-parser.add_argument('--no-feh', default=False, action='store_true', help='If given, just print the wallpaper paths, otherwise call feh with --bg-fill')
+parser.add_argument('--no-feh', default=False, action='store_true', help='If given, just print the wallpaper paths, otherwise call feh with --bg-fill. '
+                                                                         'If feh is not installed, then this is assumed to be true')
 parser.add_argument('--local', default=False, action='store_true',
                     help='If given, local images from the output directory are used, instead of downloading new ones')
 parser.add_argument('--timeout', help='Sets the socket timeout in seconds', type=float, required=False)
@@ -99,9 +108,11 @@ online = not args.local
 args.out_dir = os.path.expandvars(os.path.expanduser(os.path.abspath(args.out_dir)))
 if args.timeout:
     socket.setdefaulttimeout(args.timeout)
-
 if args.n <= 0:
     sys.exit(0)
+if not find_feh():
+    print "feh not found, setting no-feh to true"
+    args.no_feh = True
 
 images = get_image_resources(args.url, args.out_dir, args.local)
 paths = []
