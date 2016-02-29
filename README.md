@@ -12,7 +12,7 @@ or
 
 ## Usage
 <pre>
-usage: fetch_wallpapers.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh]
+usage: wallpaper-fetcher.py [-h] [-n N] [-d OUT_DIR] [--url URL] [--no-feh]
                            [--local] [--timeout TIMEOUT] [--feh-args ...]
 
   -h, --help         show this help message and exit

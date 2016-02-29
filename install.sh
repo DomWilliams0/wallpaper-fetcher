@@ -6,7 +6,7 @@ SRC_DIR="/usr/local/share"
 BIN_DIR="/usr/local/bin"
 PROJECT_NAME="wallpaper-fetcher"
 GIT_URL="https://github.com/DomWilliams0/$PROJECT_NAME"
-SCRIPT_PATH="$SRC_DIR/$PROJECT_NAME/fetch_wallpapers.py"
+SCRIPT_PATH="$SRC_DIR/$PROJECT_NAME/wallpaper-fetcher.py"
 BIN=${BIN_DIR}/${PROJECT_NAME}
 SRC=${SRC_DIR}/${PROJECT_NAME}
 
