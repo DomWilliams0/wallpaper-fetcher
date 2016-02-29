@@ -74,7 +74,7 @@ def get_image_resources(url, local_dir, local, shuffle=True):
             print "Cannot connect to site, using local images instead"
         import glob
         for e in ("*.png", "*.jpg", "*.jpeg"):
-            for i in glob.glob(local_dir + e):
+            for i in glob.glob(os.path.abspath(local_dir) + os.path.sep + e):
                 uris.append([i])
 
     if shuffle:
