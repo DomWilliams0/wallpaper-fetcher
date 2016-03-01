@@ -106,6 +106,8 @@ def parse_args():
 	parser = argparse.ArgumentParser(description="Download random wallpapers from wallhaven.cc")
 	parser.add_argument('-n', default=1, type=int, help='The number of wallpapers to download and set')
 	parser.add_argument('-d', default='/tmp/', help='The directory to save downloaded wallpapers to', dest='out_dir')
+	parser.add_argument('-r', default='1920x1080', dest='resolution', help='The desired resolution, '
+																						   'in the form of 1920x1080 for example (by default).')
 
 	parser.add_argument('--url', default=BROWSE_URL, help='The wallhaven URL to steal wallpapers from')
 	parser.add_argument('--no-feh', default=False, action='store_true',
@@ -118,8 +120,6 @@ def parse_args():
 						help='Optional arguments to pass to feh. Anything after this will be passed to feh.'
 							 'Note that you can override the default --bg-fill by specifying another option'
 							 'in this parameter list')
-	parser.add_argument('-r', '--resolution', default='1920x1080', dest='resolution', help='The desired resolution, '
-																						   'in the form of 1920x1080 for example (by default).')
 
 	parsed = parser.parse_args()
 
