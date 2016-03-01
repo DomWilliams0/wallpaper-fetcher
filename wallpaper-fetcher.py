@@ -8,10 +8,16 @@ import urllib2
 
 import lxml.html as lx
 
+BROWSE_URL = 'http://alpha.wallhaven.cc/search?q=%22digital%20art%22&categories=111&purity=100&resolutions={0}&sorting=random'
+FULL_IMAGE_URL = 'http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-%s.%s'
+
+online = True
+
 
 def download(url):
 	"""
 	Downloads the given URL
+	:param url: The URL to download
 	:return: The contents of the URL, or None if it failed or if the global flag 'online' is False
 	"""
 	if not online:
@@ -71,7 +77,7 @@ def get_image_resources(url, local_dir, local, shuffle=True):
 			wp_id = wp_html_url[wp_html_url.rindex('/') + 1:]
 			uri = []
 			for ext in "jpg", "png":
-				uri.append('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-%s.%s' % (wp_id, ext))
+				uri.append(FULL_IMAGE_URL % (wp_id, ext))
 			uris.append(uri)
 
 	else:
@@ -100,22 +106,26 @@ def parse_args():
 	parser = argparse.ArgumentParser(description="Download random wallpapers from wallhaven.cc")
 	parser.add_argument('-n', default=1, type=int, help='The number of wallpapers to download and set')
 	parser.add_argument('-d', default='/tmp/', help='The directory to save downloaded wallpapers to', dest='out_dir')
-	parser.add_argument('--url',
-						default='http://alpha.wallhaven.cc/search?q=%22digital%20art%22&categories=111&purity=100&resolutions=1920x1080&sorting=random&order=desc',
-						help='The wallhaven URL to steal wallpapers from')
-	parser.add_argument('--no-feh', default=False, action='store_true', help='If given, just print the wallpaper paths, otherwise call feh with --bg-fill. '
-																			 'If feh is not installed, then this is assumed to be true')
+
+	parser.add_argument('--url', default=BROWSE_URL, help='The wallhaven URL to steal wallpapers from')
+	parser.add_argument('--no-feh', default=False, action='store_true',
+						help='If given, just print the wallpaper paths, otherwise call feh with --bg-fill. '
+							 'If feh is not installed, then this is assumed to be true')
 	parser.add_argument('--local', default=False, action='store_true',
 						help='If given, local images from the output directory are used, instead of downloading new ones')
 	parser.add_argument('--timeout', help='Sets the socket timeout in seconds', type=float, required=False)
-	parser.add_argument('--feh-args', nargs=argparse.REMAINDER, help='Optional arguments to pass to feh. Anything after this will be passed to feh.'
-																	 'Note that you can override the default --bg-fill by specifying another option'
-																	 'in this parameter list')
+	parser.add_argument('--feh-args', nargs=argparse.REMAINDER,
+						help='Optional arguments to pass to feh. Anything after this will be passed to feh.'
+							 'Note that you can override the default --bg-fill by specifying another option'
+							 'in this parameter list')
+	parser.add_argument('-r', '--resolution', default='1920x1080', dest='resolution', help='The desired resolution, '
+																						   'in the form of 1920x1080 for example (by default).')
 
 	parsed = parser.parse_args()
 
 	global online
 	online = not parsed.local
+	parsed.url = parsed.url.format(parsed.resolution)
 	parsed.local = None
 
 	parsed.out_dir = os.path.expandvars(os.path.expanduser(os.path.abspath(parsed.out_dir)))
